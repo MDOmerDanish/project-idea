@@ -2,6 +2,13 @@
 
 **Status:** design draft v0.1 · **Builds on:** Idea 4 in [`bdllm_extensions.md`](bdllm_extensions.md) · **Paper anchor:** `07_discussion.tex`, "Extending to multi-hop hub networks"
 
+> **Partly superseded.** [`specroute_paper_draft.md`](specroute_paper_draft.md) §3 replaces three v0.1 mechanisms that have loopholes:
+> - the plaintext bitmap becomes a **sealed outcome with a blind receipt**;
+> - the single-mode HTLC becomes a **two-mode outcome-priced lock with a request price**;
+> - the shared hash lock $H(K_i)$ becomes **tweaked point locks**.
+>
+> Where the two documents disagree (§4, §5, §8 here), follow the paper draft. The cost model (§7), implementation plan (§9) and evaluation plan (§10) still apply.
+
 > *"...a client's payment envelope could carry a route of Hubs rather than a single verifier, with each hop's speculative HTLC settled only once the final Hub's bitmap is known ... The practical cost is collateral: every intermediate Hub would need to lock capital covering the batch's maximum value for the round-trip time of the whole route, not just one hop, fragmenting liquidity across the network in proportion to path length."* — SPECIE, §Discussion
 
 **One-paragraph summary.** We extend SPECIE's bilateral speculative state channel into a *routed* one. The client keeps a single funded channel with some Hub $H_1$ and buys verification from a distant Hub $H_n$ through a path of Hub-to-Hub channels. The design rests on three moves. (1) **Split the planes:** drafts, bitmaps and ciphertext travel directly between client and $H_n$, and only payments travel over the route. (2) **The key is the preimage:** every hop's HTLC is locked on $H(K_i)$, the key commitment SPECIE already has $H_n$ sign. Getting paid therefore requires revealing the decryption key, so the goods and the money propagate back along the path atomically. (3) **Bitmap-determined amounts at every hop:** each hop's amount is a public function $f_k(\alpha_i)$ of the one bitmap $B_i$ that $H_n$ signed and the client approved. With one-batch-ahead lock pipelining, routing adds no round-trips to the per-round critical path. Its whole cost is collateral. We model that collateral exactly, and show it grows linearly with path length in the honest case but *quadratically* under adversarial stalling. That quadratic term is the result the paper's one-sentence remark does not capture.
