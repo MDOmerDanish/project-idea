@@ -1,0 +1,14 @@
+{
+  "_comment": "Standalone data snapshot for 4.3_cheating_hub_economics, extracted from prototype/results/4.3_cheating_hub_economics.json. Dollar amounts are recomputed at the canonical PRICE_PER_TOKEN_USD (0.00000008, prototype/src/common/pricing.py) rather than the JSON's own net_spent_usd fields, which were measured at an old $0.005/token placeholder.",
+  "price_per_token_usd": 0.00000008,
+  "honest": {
+    "tokens_paid": 18,
+    "total_gamma_requested": 56,
+    "claimed_model": "Meta-Llama-3-8B-Instruct"
+  },
+  "cheating": {
+    "tokens_paid": 4,
+    "total_gamma_requested": 56,
+    "cheat_model": "TinyLlama-1.1B-Chat-v1.0"
+  }
+}

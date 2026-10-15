@@ -1,0 +1,19 @@
+{
+  "_comment": "Standalone data snapshot for 10.3_cedos_honest_throughput, extracted from simulation/results/summary.json (experiment exp3_cedos, 16-hub fleet, 50 req/s arrival, multi_region topology, delta_t=500ms) so this figure can be regenerated without re-running the simulator.",
+  "n_hubs": 16,
+  "arrival_rate": 50,
+  "topology": "multi_region",
+  "delta_t_ms": 500,
+  "scheduler_on": {
+    "malicious_fraction": [0.0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
+    "honest_tps": [898.426, 862.563, 816.421, 699.43, 628.119, 539.597, 438.841, 268.107],
+    "honest_tps_ci_lo": [877.506, 844.663, 800.937, 676.956, 610.83, 525.846, 423.752, 260.454],
+    "honest_tps_ci_hi": [919.347, 880.463, 831.905, 721.903, 645.407, 553.348, 453.93, 275.76]
+  },
+  "scheduler_off": {
+    "malicious_fraction": [0.0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
+    "honest_tps": [898.426, 532.183, 228.282, 75.364, 26.691, 10.623, 3.928, 0.329],
+    "honest_tps_ci_lo": [877.506, 519.383, 223.567, 71.516, 24.521, 9.037, 2.861, 0.048],
+    "honest_tps_ci_hi": [919.347, 544.982, 232.997, 79.212, 28.86, 12.21, 4.995, 0.611]
+  }
+}

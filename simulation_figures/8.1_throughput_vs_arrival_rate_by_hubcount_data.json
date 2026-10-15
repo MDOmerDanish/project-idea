@@ -1,0 +1,120 @@
+{
+  "_comment": "Standalone data snapshot for 8.1_throughput_vs_arrival_rate_by_hubcount, extracted from simulation/results/summary.json (experiment exp8_throughput_vs_arrival_rate_by_hubcount) so this figure can be regenerated without re-running the simulator.",
+  "hubs4": {
+    "label": "4 hubs",
+    "arrival_rate": [
+      10,
+      50,
+      100,
+      200,
+      400,
+      800,
+      1600
+    ],
+    "throughput_tps": [
+      112.53,
+      545.636,
+      912.504,
+      1139.207,
+      1182.636,
+      1189.412,
+      1192.267
+    ],
+    "throughput_tps_ci_lo": [
+      106.052,
+      517.358,
+      885.035,
+      1125.302,
+      1181.36,
+      1188.563,
+      1191.61
+    ],
+    "throughput_tps_ci_hi": [
+      119.008,
+      573.914,
+      939.973,
+      1153.113,
+      1183.912,
+      1190.262,
+      1192.924
+    ]
+  },
+  "hubs8": {
+    "label": "8 hubs",
+    "arrival_rate": [
+      10,
+      50,
+      100,
+      200,
+      400,
+      800,
+      1600
+    ],
+    "throughput_tps": [
+      155.771,
+      765.169,
+      1397.966,
+      2063.545,
+      2351.989,
+      2377.7,
+      2384.418
+    ],
+    "throughput_tps_ci_lo": [
+      148.632,
+      727.619,
+      1344.391,
+      2008.098,
+      2340.527,
+      2376.266,
+      2383.463
+    ],
+    "throughput_tps_ci_hi": [
+      162.91,
+      802.72,
+      1451.541,
+      2118.992,
+      2363.451,
+      2379.135,
+      2385.373
+    ]
+  },
+  "hubs16": {
+    "label": "16 hubs",
+    "arrival_rate": [
+      10,
+      50,
+      100,
+      200,
+      400,
+      800,
+      1600
+    ],
+    "throughput_tps": [
+      180.257,
+      898.604,
+      1723.822,
+      3141.785,
+      4463.704,
+      4748.614,
+      4767.707
+    ],
+    "throughput_tps_ci_lo": [
+      177.012,
+      881.797,
+      1678.94,
+      3061.835,
+      4400.938,
+      4746.81,
+      4766.02
+    ],
+    "throughput_tps_ci_hi": [
+      183.502,
+      915.411,
+      1768.705,
+      3221.735,
+      4526.47,
+      4750.418,
+      4769.394
+    ]
+  }
+}

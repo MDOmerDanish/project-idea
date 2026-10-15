@@ -1,0 +1,46 @@
+{
+  "_comment": "Standalone data snapshot for 7d.1_multigamma_fleet_throughput_vs_acceptance_rate, extracted from simulation/results/7d_multigamma_throughput_vs_acceptance_rate.json (synthetically swept acceptance rate per gamma, 50-hub fleet) plus realized acceptance-rate ceilings derived from prototype/results/2.3_gamma_fine_sweep_cuda_llama32_llamacpp.json, so this figure can be regenerated without re-running the simulator or prototype.",
+  "series": {
+    "1": [
+      {"acceptance_rate": 0.193, "throughput_tps": 858.558},
+      {"acceptance_rate": 0.399, "throughput_tps": 1008.706},
+      {"acceptance_rate": 0.601, "throughput_tps": 1151.355},
+      {"acceptance_rate": 0.806, "throughput_tps": 1298.855}
+    ],
+    "3": [
+      {"acceptance_rate": 0.194, "throughput_tps": 1141.265},
+      {"acceptance_rate": 0.394, "throughput_tps": 1571.086},
+      {"acceptance_rate": 0.6, "throughput_tps": 2016.055},
+      {"acceptance_rate": 0.802, "throughput_tps": 2443.45}
+    ],
+    "5": [
+      {"acceptance_rate": 0.194, "throughput_tps": 1422.704},
+      {"acceptance_rate": 0.394, "throughput_tps": 2129.537},
+      {"acceptance_rate": 0.596, "throughput_tps": 2869.55},
+      {"acceptance_rate": 0.801, "throughput_tps": 3606.014}
+    ],
+    "7": [
+      {"acceptance_rate": 0.191, "throughput_tps": 1692.107},
+      {"acceptance_rate": 0.25, "throughput_tps": 1976.657},
+      {"acceptance_rate": 0.294, "throughput_tps": 2200.965},
+      {"acceptance_rate": 0.393, "throughput_tps": 2695.905},
+      {"acceptance_rate": 0.598, "throughput_tps": 3741.105},
+      {"acceptance_rate": 0.785, "throughput_tps": 4682.943}
+    ],
+    "9": [
+      {"acceptance_rate": 0.184, "throughput_tps": 1910.592},
+      {"acceptance_rate": 0.199, "throughput_tps": 2004.21},
+      {"acceptance_rate": 0.236, "throughput_tps": 2244.548},
+      {"acceptance_rate": 0.386, "throughput_tps": 3230.583},
+      {"acceptance_rate": 0.594, "throughput_tps": 4567.735},
+      {"acceptance_rate": 0.757, "throughput_tps": 5623.355}
+    ]
+  },
+  "realized_acceptance_ceilings": {
+    "1": 0.68,
+    "3": 0.54,
+    "5": 0.372,
+    "7": 0.32857142857142857,
+    "9": 0.2644444444444444
+  }
+}

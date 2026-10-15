@@ -1,0 +1,8 @@
+{
+  "_comment": "Standalone data snapshot for 2.1_gamma_config_tradeoff, extracted from prototype/results/2.3_gamma_fine_sweep_{quick,cuda_quick,llama32_quick,cuda_llama32_llamacpp_quick}.json so this figure can be regenerated without re-running the prototype.",
+  "gammas": [1, 3, 5, 7, 9],
+  "cpu_tinyllama_tokps": [2.07652878136382, 1.3563754565793509, 0.974933428541676, 0.75495226017026, 0.6028668741045331],
+  "gpu_tinyllama_tokps": [1.8436725311091695, 2.5648610357622563, 1.8780548362115923, 2.181719256386229, 2.0269476545121448],
+  "cpu_llama32_tokps": [3.512433687218612, 3.185578471728863, 2.477593645577803, 2.0829600803807593, 1.6701178522817557],
+  "gpu_llama32_tokps": [9.081255540653512, 20.14720386941741, 18.606051297122402, 16.83763339040085, 16.25334210169399]
+}
