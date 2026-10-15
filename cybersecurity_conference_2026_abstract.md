@@ -10,14 +10,9 @@ Our single-hop prototype on a real GPU and live blockchain, adds under 1 ms of p
 
 **References:**
 
-[1] A. Borzunov, D. Baranchuk, T. Dettmers, M. Ryabinin, Y. Belkada, A. Chumachenko, P. Samygin, and C. Raffel, "Petals: Collaborative inference and fine-tuning of large models," in *Proc. 61st Annu. Meeting Assoc. Computational Linguistics (Volume 3: System Demonstrations)*, Toronto, Canada, Jul. 2023, pp. 558–568.
-
-[2] Y. Leviathan, M. Kalman, and Y. Matias, "Fast inference from transformers via speculative decoding," in *Proc. 40th Int. Conf. Machine Learning (ICML)*, Honolulu, HI, USA, Jul. 2023, ser. Proc. Mach. Learn. Res., vol. 202, pp. 19274–19286.
-
-[3] J. Poon and T. Dryja, "The Bitcoin Lightning Network: Scalable off-chain instant payments," Lightning Network, Tech. Rep., v0.5.9.2, Jan. 2016. [Online]. Available: https://lightning.network/lightning-network-paper.pdf
-
-[4] S. Dziembowski, L. Eckey, S. Faust, and D. Malinowski, "Perun: Virtual payment hubs over cryptocurrencies," in *Proc. IEEE Symp. Security and Privacy (S&P)*, San Francisco, CA, USA, May 2019, pp. 106–123.
-
-[5] M. Campanelli, R. Gennaro, S. Goldfeder, and L. Nizzardo, "Zero-knowledge contingent payments revisited: Attacks and payments for services," in *Proc. ACM SIGSAC Conf. Computer and Communications Security (CCS)*, Dallas, TX, USA, Oct. 2017, pp. 229–243.
-
-[6] G. Malavolta, P. Moreno-Sanchez, C. Schneidewind, A. Kate, and M. Maffei, "Anonymous multi-hop locks for blockchain scalability and interoperability," in *Proc. Network and Distributed System Security Symp. (NDSS)*, San Diego, CA, USA, Feb. 2019.
+[1] A. Borzunov et al., "Petals: Collaborative inference and fine-tuning of large models," in *Proc. ACL (System Demonstrations)*, 2023, pp. 558–568.  
+[2] Y. Leviathan, M. Kalman, and Y. Matias, "Fast inference from transformers via speculative decoding," in *Proc. ICML*, 2023, pp. 19274–19286.  
+[3] J. Poon and T. Dryja, "The Bitcoin Lightning Network: Scalable off-chain instant payments," Tech. Rep., 2016.  
+[4] S. Dziembowski, L. Eckey, S. Faust, and D. Malinowski, "Perun: Virtual payment hubs over cryptocurrencies," in *Proc. IEEE S&P*, 2019, pp. 106–123.  
+[5] M. Campanelli et al., "Zero-knowledge contingent payments revisited: Attacks and payments for services," in *Proc. ACM CCS*, 2017, pp. 229–243.  
+[6] G. Malavolta et al., "Anonymous multi-hop locks for blockchain scalability and interoperability," in *Proc. NDSS*, 2019.
