@@ -807,8 +807,8 @@ The log combines two structures, and each has its own job:
 ```mermaid
 flowchart TB
     R["<b>root R</b><br/>signed by the client in Rcpt"]
-    N12["H(W₁ ‖ W₂)"]
-    N34["H(W₃ ‖ W₄)"]
+    N12["N₁₂ = H(H(W₁) ‖ H(W₂))"]
+    N34["N₃₄ = H(H(W₃) ‖ H(W₄))"]
     R --- N12
     R --- N34
     subgraph CHAIN["Hash chain: each record signed by its author"]
@@ -833,6 +833,44 @@ flowchart TB
 
 **Figure 13(a): The work log.** The chain (bottom) records who did which steps, and on which input. The tree (top) commits the whole chain in one root, which the client signs. To accuse $H_2$, a party posts $W_1$, $W_2$, and their inclusion proofs. $H_3$ did no steps and forwarded for its fee, as a relay in §3 does.
 
+The log is built in two phases. While the task moves down the chain, it grows by one record at each hand-off, and every new record is delivered to the client in a custody report. When the task ends, the terminal Agent builds the Merkle tree over the finished chain, bottom up, and the client rebuilds the same tree from its own copies before signing the root. Figure 13(b) shows both phases for the four-record log of Figure 13(a).
+
+```mermaid
+flowchart TB
+    subgraph P1["Phase 1: the chain grows, one record per hand-off"]
+        direction LR
+        S1["<b>after H₁ hands off</b><br/>Task ← W₁<br/>client holds W₁, Ack₂"]
+        S2["<b>after H₂ hands off</b><br/>Task ← W₁ ← W₂<br/>client holds W₂, Ack₃"]
+        S3["<b>after H₃ hands off</b><br/>Task ← W₁ ← W₂ ← W₃<br/>client holds W₃, Ack₄"]
+        S4["<b>H₄ finishes</b><br/>Task ← W₁ ← W₂ ← W₃ ← W₄ (Done)<br/>the chain is now fixed"]
+        S1 --> S2 --> S3 --> S4
+    end
+    subgraph P2["Phase 2: the terminal Agent H₄ builds the tree, bottom up"]
+        direction LR
+        L0["<b>① leaves</b><br/>H(W₁)  H(W₂)  H(W₃)  H(W₄)"]
+        L1["<b>② level 1</b><br/>N₁₂ = H(H(W₁) ‖ H(W₂))<br/>N₃₄ = H(H(W₃) ‖ H(W₄))"]
+        L2["<b>③ root</b><br/>R = H(N₁₂ ‖ N₃₄)<br/>sent to the client with ct and W₄"]
+        L0 --> L1 --> L2
+    end
+    subgraph P3["Phase 3: the client checks and commits"]
+        direction LR
+        V1["<b>④ rebuild</b><br/>client recomputes R from W₁–W₃<br/>in its custody reports, plus W₄"]
+        V2{"same R, and<br/>log valid (M1) ?"}
+        V3["<b>⑤ sign</b><br/>Rcpt = Signₛ(tid, R, H(ct))<br/>R is now binding on everyone"]
+        V4["refuse to receipt<br/>the claim must carry ct instead"]
+        V1 --> V2
+        V2 -- "yes" --> V3
+        V2 -- "no" --> V4
+    end
+    P1 --> P2 --> P3
+    classDef root fill:#1e6b3a,stroke:#1e6b3a,color:#fff
+    classDef bad fill:#8b1e1e,stroke:#8b1e1e,color:#fff
+    class L2,V3 root
+    class V4 bad
+```
+
+**Figure 13(b): Building the work log and its Merkle tree.** Phase 1: the chain grows by one signed record per hand-off, and the client receives every record as it is written. Phase 2: when the plan is done, the terminal Agent hashes the records into leaves, pairs them level by level, and obtains the root $R$. With an odd number of records, the last node is paired with itself. Phase 3: the client rebuilds the tree from its own copies, so no Agent can hand it a root over a different history. Its receipt then fixes $R$. Any later dispute about segment $j$ needs only $W_{j-1}$, $W_j$, and their sibling hashes along the path to $R$, which is two hashes each here and $O(\log e)$ in general.
+
 **M2: Sealed hand-offs with blind custody acknowledgments (A2, A5).** To hand off, $H_j$:
 
 1. offers the lock on $\ell_{j+1}$ (M4);
@@ -845,6 +883,34 @@ $$\mathrm{Ack}_{j+1} = \mathrm{Sign}_{j+1}\big(\mathit{tid},\ j{+}1,\ H(W_j),\ \
 where $\delta_{j+1}$ is its custody deadline. $H_j$ then reveals $k_j$, and sends $(W_j, \mathrm{Ack}_{j+1})$ to the client as a custody report.
 
 This is Idea 1 applied between Agents. $H_{j+1}$ commits to *exactly which* input it received, by hash, before it can read the input. It therefore cannot later claim to have received something else (A5). Because it cannot read the state before acknowledging, it also cannot take the state and deny having received it. If $H_j$ never reveals $k_j$, $H_{j+1}$ posts a key demand on the ledger. $H_j$ must then post $k_j$, which the ledger checks against $H(k_j)$ in $W_j$, within $\Delta_{\mathrm{resp}}$, or be convicted of a drop.
+
+Figure 13(c) shows one hand-off in full, including what happens when either side stops cooperating.
+
+```mermaid
+sequenceDiagram
+    participant C as Client C
+    participant Hj as Agent Hⱼ (hands off)
+    participant Hk as Agent Hⱼ₊₁ (takes over)
+    participant L as Ledger
+    Note over Hj: has finished steps aⱼ … bⱼ, holds xⱼ<br/>writes Wⱼ = Signⱼ(…, H(xⱼ₋₁), H(xⱼ), Fwd(pkⱼ₊₁, H(ctʰⱼ), H(kⱼ)))
+    Hj->>Hk: ① lock on ℓⱼ₊₁: cap Bⱼ₊₁, expiry, pinned hⱼ = H(Wⱼ)
+    Hj->>Hk: ② Wⱼ and sealed state ctʰⱼ = Enc_kⱼ(xⱼ, remaining plan)
+    Note over Hk: ③ checks: lock is LOCKED, Wⱼ extends the chain,<br/>cap and expiry acceptable. Cannot read xⱼ yet
+    Hk->>Hj: ④ Ackⱼ₊₁ = Signⱼ₊₁(tid, j+1, H(Wⱼ), δⱼ₊₁). Custody passes
+    alt Hⱼ cooperates
+        Hj->>Hk: ⑤ key kⱼ
+        Note over Hk: ⑥ unseal, check H(xⱼ) matches Wⱼ, start its own steps
+        Hj-->>C: ⑦ custody report Wⱼ, Ackⱼ₊₁. Client now knows Hⱼ₊₁ holds the task until δⱼ₊₁
+    else Hⱼ withholds kⱼ
+        Hk->>L: ⑤′ key demand with Wⱼ and Ackⱼ₊₁
+        Hj->>L: kⱼ posted and checked against H(kⱼ) in Wⱼ, else Hⱼ is convicted of a drop
+    end
+    opt the unsealed input fails its check
+        Hk->>L: ⑧ accuse Wⱼ (M5), which also discharges Hⱼ₊₁'s custody
+    end
+```
+
+**Figure 13(c): One Agent-to-Agent hand-off.** The successor signs for the input by hash (④) before it can read it (⑤). It therefore cannot take the work and deny receiving it, and it cannot later claim it received something else. The predecessor cannot keep the key and still escape blame, because the key demand runs on the ledger (⑤′). The client learns of the new custodian immediately (⑦), which is what lets it accuse a dropper later (M3).
 
 **M3: Custody, discharge, and drop accusations (A2, A7).** Custody passes with each acknowledgment. By its deadline $\delta_j$, the custodian $H_j$ must be able to show one **discharge**:
 
@@ -894,7 +960,7 @@ stateDiagram-v2
     end note
 ```
 
-**Figure 13(b): Custody life cycle of one Agent.** Every way out of CUSTODY is backed by a signed object that the ledger can check. CONVICTED is reachable only through silence on the ledger, never through slowness of peers.
+**Figure 13(d): Custody life cycle of one Agent.** Every way out of CUSTODY is backed by a signed object that the ledger can check. CONVICTED is reachable only through silence on the ledger, never through slowness of peers.
 
 **M4: Payment along the delegation chain (A3, A6, A9).** When $H_{j-1}$ hands off to $H_j$, it places a lock on $\ell_j$. This is the outcome-priced lock of Idea 2 with a claim predicate over the log:
 
